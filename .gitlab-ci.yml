@@ -1,0 +1,14 @@
+before_script:
+  - apt-get update
+  - apt-get install -y zip
+build_plasmoid:
+  variables: 
+    PLASMOID_NAME: "grep \"X-KDE-PluginInfo-Name\" $$(PWD)/org.communia.apptitle/metadata.desktop | cut -d'=' -f2"
+  stage: build
+  script:
+    make build
+  artifacts:
+    name: "$CI_PROJECT_NAME-$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - "*.plasmoid"
+    expire_in: 1 day
